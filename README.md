@@ -4,17 +4,42 @@ MCP server for the [GPTMaker](https://app.gptmaker.ai) API. Manage AI agents, ch
 
 ## Installation
 
+### Claude Code (recommended)
+
+No need to install anything manually. Use `uvx` to run on demand:
+
+```bash
+claude mcp add gptmaker -e GPTMAKER_API_TOKEN=your_token_here -- uvx gptmaker-mcp
+```
+
+Or install globally first and reference the binary:
+
 ```bash
 pip install gptmaker-mcp
+claude mcp add gptmaker -e GPTMAKER_API_TOKEN=your_token_here -- gptmaker-mcp
+```
+
+### Other MCP clients (Cursor, Windsurf, etc.)
+
+Add to your MCP config:
+
+```json
+{
+  "mcpServers": {
+    "gptmaker": {
+      "command": "uvx",
+      "args": ["gptmaker-mcp"],
+      "env": {
+        "GPTMAKER_API_TOKEN": "your_token_here"
+      }
+    }
+  }
+}
 ```
 
 ## Setup
 
-Get your API token from [app.gptmaker.ai/browse/developers](https://app.gptmaker.ai/browse/developers), then add the MCP server to Claude Code:
-
-```bash
-claude mcp add gptmaker -e GPTMAKER_API_TOKEN=your_token_here -- gptmaker-mcp
-```
+Get your API token at [app.gptmaker.ai/browse/developers](https://app.gptmaker.ai/browse/developers).
 
 ## What it does
 
@@ -28,11 +53,30 @@ Exposes the full GPTMaker API as MCP tools:
 | **Channels** | Manage WhatsApp/Instagram channels, QR codes, widget config |
 | **Chats** | List conversations, send messages, human handoff |
 | **Contacts** | Search, get, update contacts |
+| **Custom Fields** | CRUD for workspace custom fields |
 | **Intentions** | Configure webhook triggers (CRM integrations, automations) |
 | **Transfer Rules** | Set up conditional conversation transfers |
 | **Idle Actions** | Configure automatic follow-up sequences |
+| **Interactions** | List completed interactions, export to CSV |
 | **MCP Connections** | Connect external MCP servers to agents |
 | **Diagnostics** | Full agent health audit with scoring |
+
+### Composite tools
+
+Higher-level tools that orchestrate multiple API calls:
+
+| Tool | What it does |
+|------|-------------|
+| `get_workspace_summary` | Fetches agents, channels, and credits in a single call |
+| `find_chat_by_phone` | Locates a conversation by phone number |
+| `monitor_channel_health` | Checks connectivity status of all channels |
+| `bulk_update_agent_model` | Migrates all agents from one LLM model to another |
+| `bulk_send_messages` | Sends outbound messages to multiple contacts |
+| `setup_notification_alerts` | Configures webhook URLs for multiple agent events atomically |
+
+## Code execution (CodeMode)
+
+This server includes **CodeMode** — a sandboxed Python execution environment. Claude can write and run Python code directly within the MCP session to automate bulk operations, data transformations, or any task that benefits from scripting.
 
 ## Requirements
 
