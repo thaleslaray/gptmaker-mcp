@@ -1,0 +1,20 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "gptmaker-mcp"
+version = "1.0.0"
+description = "MCP server for GPTMaker API — manage AI agents, channels, chats, trainings, and more"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastmcp[code-mode]>=3.1.0",
+    "httpx>=0.28.0",
+]
+
+[project.scripts]
+gptmaker-mcp = "gptmaker_mcp.server:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/gptmaker_mcp"]
