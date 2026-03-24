@@ -6,18 +6,20 @@ MCP server for the [GPTMaker](https://app.gptmaker.ai) API. Manage AI agents, ch
 
 ### Claude Code (recommended)
 
-No need to install anything manually. Use `uvx` to run on demand:
+**Step 1** — add your token to `~/.zshrc` (or `~/.bashrc`):
 
 ```bash
-claude mcp add gptmaker -e GPTMAKER_API_TOKEN=your_token_here -- uvx gptmaker-mcp
+echo 'export GPTMAKER_API_TOKEN=your_token_here' >> ~/.zshrc
+source ~/.zshrc
 ```
 
-Or install globally first and reference the binary:
+**Step 2** — add the MCP server:
 
 ```bash
-pip install gptmaker-mcp
-claude mcp add gptmaker -e GPTMAKER_API_TOKEN=your_token_here -- gptmaker-mcp
+claude mcp add gptmaker -- uvx gptmaker-mcp
 ```
+
+That's it. No need to install anything manually — `uvx` fetches and runs the package on demand.
 
 ### Other MCP clients (Cursor, Windsurf, etc.)
 
